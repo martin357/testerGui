@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.1
 Rectangle {
+   // signal clicked()
+    //signal remove(int index)
     id: root
     color: "red"// model.state === "idle" ? "black" : model.state === "running" ? "yellow" : model.state === "ok" ? "green" : model.state === "failed" ? "red" : "purple"
     border.width: 3

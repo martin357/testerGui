@@ -2,6 +2,7 @@ import QtQuick 2.11
 import QtQuick.Window 2.11
 import QtQuick.VirtualKeyboard 2.3
 import QtQuick.Controls 2.1
+import QtQuick.Layouts 1.0
 ApplicationWindow {
     property bool rotate: true
     id: window
@@ -16,22 +17,23 @@ ApplicationWindow {
 
     ListModel {
         id: prettyLittleModel
-        ListElement { type:"test"; desc:"Connect to the AP"; name: "Wifi"; state: "ok"  }
+        ListElement { type:"test"; desc:"Connect to the AP"; name: "Wifi"; state: "ok" }
         ListElement { type:"text"; text:"Lorem ipsum dolor sit amet" }
         ListElement { type:"text"; text:"Lorem ipsum dolor sit amet" }
         ListElement { type:"text"; text:"Lorem ipsum dolor sit amet" }
-        ListElement { type:"test"; desc:"Connect to the AP"; name: "Wifi"; state: "ok"  }
+        ListElement { type:"test"; desc:"Connect to the AP"; name: "Wifi"; state: "ok";    }
         ListElement { type:"text"; text:"Lorem ipsum dolor sit amet" }
         ListElement { type:"text"; text:"Lorem ipsum dolor sit amet" }
         ListElement { type:"text"; text:"Lorem ipsum dolor sit amet" }
         ListElement { type:"text"; text:"Lorem ipsum dolor sit amet" }
-        ListElement { type:"test"; desc:"Connect to the AP"; name: "Wifi"; state: "ok"  }
-        ListElement { type:"test"; desc:"Connect to the AP"; name: "Wifi"; state: "ok"  }
+        ListElement { type:"test"; desc:"Connect to the AP"; name: "Wifi"; state: "ok";  }
+        ListElement { type:"test"; desc:"Connect to the AP"; name: "Wifi"; state: "ok"; }
     }
 
     Component {
         id: prettyLittleDelegate
         Loader {
+            id: loader
             source: {
                 switch(type) {
                 case "test": return "DelegateTest.qml"
@@ -39,9 +41,32 @@ ApplicationWindow {
                 default:
                     console.log("ListElement - uknoswn type: " + type)
                 }
+
+            }
+            /*Connections {
+                target: loader.item
+                onClicked: { field.text = "Signaled - " + type + ", " + name}
+                onRemove: {
+                    prettyLittleModel.remove(index)
+                }
+            }*/
+            onLoaded: {
+                switch(type) {
+                case "test":
+                    loader.item["onClicked"].connect(function() {field.text = "Signaled - " + type + ", " + name})
+                    loader.item["onRemove"].connect(prettyLittleModel.remove)
+                    break
+                case "text":
+
+                    break
+                default:
+                }
             }
 
+
+
         }
+
     }
 
     Page {
@@ -116,24 +141,50 @@ ApplicationWindow {
                 clip: true
             }
 
-            Button {
-                text: "remove first"
-                onClicked: {
-                    console.log(JSON.stringify(prettyLittleModel.get(2)))
-                    prettyLittleModel.remove(2)
+            Column {
+                anchors {
+                    right: parent.right
+                    top: parent.top
                 }
+                width: 200
+                Button {
+                    text: "Remove"
+                    onClicked: {
+                        console.log(JSON.stringify(prettyLittleModel.get(2)))
+                        prettyLittleModel.remove(2)
+                    }
+                }
+                Button {
+                    text: "Add"
+                    onClicked:  {
+                        var item ={ type:"test", desc:"Connect to the AP", name: "Wifi", state: "ok",    }
+                        prettyLittleModel.append(item)
+                    }
+
+                }
+                Button {
+                    text: "Remove texts"
+                    onClicked: {
+                        for(var i  = prettyLittleModel.count - 1; i >= 0; i-- ) {
+                            if(prettyLittleModel.get(i).type === "text") {
+                                prettyLittleModel.remove(i)
+                            }
+                        }
+                    }
+                }
+
+
+
+                TextField {
+
+                    id: field
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y: 4
+                    text: "Zlá ovce"
+                    Layout.fillWidth: true
+                }
+
             }
-
-            /*
-
-            TextField {
-
-                id: field
-                anchors.horizontalCenter: parent.horizontalCenter
-                y: 4
-                text: "Zlá ovce"
-            }
-            */
 
         }
     }
