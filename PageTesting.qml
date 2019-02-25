@@ -13,6 +13,16 @@ Page {
         width: 800
         color: "black"
         anchors.fill: parent
+        Timer {
+            id: readTimer
+            interval: 3000
+            repeat: true
+            running: true
+            onTriggered: {
+                edit.text += prc.readAllStandardOutput()
+                edit.text += prc.readAllStandardError()
+            }
+        }
         Process {
             id: prc
             onFinished: {
@@ -42,6 +52,8 @@ Page {
             onReadyReadStandardError: {
                 edit.text += readAllStandardError()
             }
+
+
         }
 
         Button {
@@ -56,20 +68,6 @@ Page {
 
                 prc.start("tester.py", [])
                 progressBar.value = 0.05
-                edit.text += "
-List of all members, including inherited members
-Properties
-background : Item
-focusReason : enumeration
-hoverEnabled : bool
-hovered : bool
-palette : palette
-placeholderText : string
-Attached Properties
-flickable : TextArea
-Signals
-pressAndHold(MouseEvent event)
-pressed(MouseEvent event)"
             }
         }
 
@@ -101,6 +99,7 @@ pressed(MouseEvent event)"
                  color: "white"
                  enabled: false
                  id: edit
+                 font.pixelSize: 16
                  width: flick.width
                  focus: true
                  wrapMode: TextEdit.Wrap
