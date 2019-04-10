@@ -65,6 +65,8 @@ Page {
             height: 80
             width: 200
             onClicked: {
+                console.log("Start clicked, selected board: " + root.selected.name)
+                console.log(JSON.stringify(root.selected))
                 switch(root.selected.name) {
                 case "a64_v1_2":
                 case "a64_v1_3":
@@ -72,12 +74,48 @@ Page {
                     progressBar.value = 0.05
                     break
                 case "mcu_v5":
-                    prc.start("flash_mcu.py", [])
+                    prc.start("flash_mcu.py", ["--rev", "5"])
+                    progressBar.value = 0.5
+                    break;
+                case "mcu_v6":
+                    prc.start("flash_mcu.py", ["--rev", "6"])
+                    progressBar.value = 0.5
+                    break;
+
+                case "cw1_v1":
+                    prc.start("flash_cw1.py", [])
                     progressBar.value = 0.5
                     break;
                 default:
                     edit.text = "Unsupported board, this is a problem with the tester software, please contact me on Slack: Martin Kopecky(vyvoj)"
                     break;
+                }
+            }
+        }
+
+        Rectangle {
+            color: "#313131"
+            opacity: 0.4
+            width: 150
+            height: 50
+            radius: 10
+            anchors {
+                right: parent.right
+                top:parent.top
+            }
+
+            Text {
+                font.pixelSize: 28
+                color: "white"
+                anchors.centerIn: parent
+                text:  root.selected.name
+                Timer {
+                    interval: 1000
+                    repeat: true
+                    running: true
+                    onTriggered: {
+                        parent.text = root.selected.name
+                    }
                 }
             }
         }
@@ -131,7 +169,10 @@ Page {
             font.pixelSize: 28
             height: 80
             width: 200
-            onClicked: view.currentIndex = view.currentIndex - 1
+            onClicked: {
+                btnNext.onClicked() // cleanup
+                view.currentIndex = view.currentIndex - 1
+            }
         }
         Button {
             id: btnNext

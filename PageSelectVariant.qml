@@ -52,7 +52,8 @@ Page {
                 checked: false
                 onCheckedChanged: {
                     if(checked) {
-                        root.selected = "a64_v1_2"
+                        root.selected.name = "a64_v1_2"
+
                     }
                 }
             }
@@ -62,27 +63,43 @@ Page {
                 checked: true
                 onCheckedChanged: {
                     if(checked) {
-                        root.selected = "a64_v1_3"
+                        root.selected.name = "a64_v1_3"
                     }
                 }
             }
             MyRadioButton {
-                text: qsTr("Motion Controller 5")
+                text: qsTr("Motion Controller rev5")
                 //Layout.alignment: Qt.AlignHCenter
                 onCheckedChanged: {
                     if(checked) {
-                        root.selected = "mcu_v5"
+                        root.selected.name = "mcu_v5"
                     }
                 }
                 checked: false
             }
-            /*
             MyRadioButton {
-                text: qsTr("Motion Controller 6")
+                text: qsTr("Motion Controller rev6")
                 //Layout.alignment: Qt.AlignHCenter
+                onCheckedChanged: {
+                    if(checked) {
+                        root.selected.name = "mcu_v6"
+                    }
+                }
                 checked: false
             }
-            */
+            MyRadioButton {
+                text: qsTr("CW1")
+                //Layout.alignment: Qt.AlignHCenter
+                onCheckedChanged: {
+                    if(checked) {
+                        root.selected.name = "cw1_v1"
+                    }
+                }
+                checked: false
+            }
+
+
+
         }
 
     }
