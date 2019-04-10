@@ -3,7 +3,7 @@
 #include <QProcess>
 #include <QVariant>
 #include <QDebug>
-
+/* Process wrapper */
 class Process : public QProcess {
     Q_OBJECT
 

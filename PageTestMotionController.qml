@@ -60,25 +60,14 @@ Page {
             id: btnStart
             x: 300
             y: 392
-            text: "Start"
+            text: "Flash"
             font.pixelSize: 28
             height: 80
             width: 200
             onClicked: {
-                switch(root.selected.name) {
-                case "a64_v1_2":
-                case "a64_v1_3":
-                    prc.start("tester.py", [])
-                    progressBar.value = 0.05
-                    break
-                case "mcu_v5":
-                    prc.start("flash_mcu.py", [])
-                    progressBar.value = 0.5
-                    break;
-                default:
-                    edit.text = "Unsupported board, this is a problem with the tester software, please contact me on Slack: Martin Kopecky(vyvoj)"
-                    break;
-                }
+
+                prc.start("tester.py", [])
+                progressBar.value = 0.05
             }
         }
 

@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.4
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.3
 Page {
@@ -39,22 +39,50 @@ Page {
             Item {
                 height: 30
             }
-
+            /*
             MyRadioButton {
                 checked: false
-                text: qsTr("V1.1")
+                text: qsTr("PrusaA64 V1.1")
                 Layout.alignment: Qt.AlignHCenter
             }
+            */
             MyRadioButton {
-                text: qsTr("V1.2")
-                Layout.alignment: Qt.AlignHCenter
+                text: qsTr("PrusaA64 V1.2")
+                //Layout.alignment: Qt.AlignHCenter
                 checked: false
+                onCheckedChanged: {
+                    if(checked) {
+                        root.selected = "a64_v1_2"
+                    }
+                }
             }
             MyRadioButton {
-                text: qsTr("V1.3")
-                Layout.alignment: Qt.AlignHCenter
+                text: qsTr("PrusaA64 V1.3")
+                //Layout.alignment: Qt.AlignHCenter
                 checked: true
+                onCheckedChanged: {
+                    if(checked) {
+                        root.selected = "a64_v1_3"
+                    }
+                }
             }
+            MyRadioButton {
+                text: qsTr("Motion Controller 5")
+                //Layout.alignment: Qt.AlignHCenter
+                onCheckedChanged: {
+                    if(checked) {
+                        root.selected = "mcu_v5"
+                    }
+                }
+                checked: false
+            }
+            /*
+            MyRadioButton {
+                text: qsTr("Motion Controller 6")
+                //Layout.alignment: Qt.AlignHCenter
+                checked: false
+            }
+            */
         }
 
     }
