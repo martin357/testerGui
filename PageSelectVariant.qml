@@ -46,6 +46,7 @@ Page {
                 Layout.alignment: Qt.AlignHCenter
             }
             */
+            /*
             MyRadioButton {
                 text: qsTr("PrusaA64 V1.2")
                 //Layout.alignment: Qt.AlignHCenter
@@ -56,7 +57,7 @@ Page {
 
                     }
                 }
-            }
+            }*/
             MyRadioButton {
                 text: qsTr("PrusaA64 V1.3")
                 //Layout.alignment: Qt.AlignHCenter

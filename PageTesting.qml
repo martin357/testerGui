@@ -13,14 +13,58 @@ Page {
         width: 800
         color: "black"
         anchors.fill: parent
+
+        Rectangle {
+            property string txt: ""
+            id: banner
+            anchors.centerIn: parent
+            anchors.verticalCenterOffset: -150
+            width: 500
+            height: 250
+            visible: txt !== ""
+            color: "black"
+            border.color: "yellow"
+            border.width: 3
+            radius: 5
+            z: 50
+
+            Text {
+                color: "white"
+                text: parent.txt
+                font.bold: true
+                font.pixelSize: 32
+                anchors.centerIn: parent
+            }
+        }
+
         Timer {
             id: readTimer
             interval: 3000
             repeat: true
             running: true
             onTriggered: {
-                edit.text += prc.readAllStandardOutput()
-                edit.text += prc.readAllStandardError()
+                /*var stdout_var = prc.readAllStandardOutput().toString()
+                var stderr_var = prc.readAllStandardError().toString()
+
+                if(stdout_var.indexOf("#request_qrcode") !== -1) {
+                    bg.color = "yellow"
+                }
+                if(stdout_var.indexOf("#request_qrcode_done") !== -1) {
+                    bg.color = "black"
+                }
+                console.log(stdout_var)
+                edit.text += stdout_var
+                edit.text += stderr_var
+                */
+                var txt = prc.readAll().toString()
+                console.log("new text: " + txt)
+                edit.text += txt
+                if(txt.indexOf("#request_qrcode") != -1) {
+                    bg.color = "yellow"
+                }
+                if(txt.indexOf("#request_qrcode_done") != -1) {
+                    bg.color = "black"
+                }
             }
         }
         Process {
@@ -38,18 +82,41 @@ Page {
                     bg.color = "red"
                 }
             }
+            onBytesWritten: {
+                console.log("bytesWritten")
+            }
+            onError: {
+                print("error")
+            }
+            onStateChanged: {
+                console.log("StateChanged:" + state )
+            }
+
             onErrorOccurred: {
-                console.log("Could not start tester.sh")
+                console.log("Could not start")
             }
             onStarted: {
-                progressBar.value = 0.1
+                progressBar.value = 0.2
                 btnStart.enabled = false
                 btnPickVariant.enabled = false
+                console.log("Process Started")
             }
-            onReadyReadStandardOutput: {
-                edit.text += readAllStandardOutput()
+            onReadyRead: {
+                var txt = readAll().toString()
+                console.log("Process read: " + txt)
+                edit.text += txt
+                if(txt.indexOf("request_qrcode") != -1) {
+                    //bg.color = "orange"
+                    banner.txt = "Scan the QRCode"
+                }
+                if(txt.indexOf("request_qrcode_done") != -1) {
+                    //bg.color = "black"
+                    banner.txt = ""
+                }
             }
+
             onReadyReadStandardError: {
+                console.log("Process StdErrReady")
                 edit.text += readAllStandardError()
             }
 
@@ -70,21 +137,21 @@ Page {
                 switch(root.selected.name) {
                 case "a64_v1_2":
                 case "a64_v1_3":
-                    prc.start("tester.py", [])
+                    prc.start("/usr/bin/tester.py", [])
                     progressBar.value = 0.05
                     break
                 case "mcu_v5":
                     prc.start("flash_mcu.py", ["--rev", "5"])
-                    progressBar.value = 0.5
+                    progressBar.value = 0.05
                     break;
                 case "mcu_v6":
                     prc.start("flash_mcu.py", ["--rev", "6"])
-                    progressBar.value = 0.5
+                    progressBar.value = 0.05
                     break;
 
                 case "cw1_v1":
                     prc.start("flash_cw1.py", [])
-                    progressBar.value = 0.5
+                    progressBar.value = 0.05
                     break;
                 default:
                     edit.text = "Unsupported board, this is a problem with the tester software, please contact me on Slack: Martin Kopecky(vyvoj)"

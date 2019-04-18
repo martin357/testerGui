@@ -6,7 +6,13 @@
 /* Process wrapper */
 class Process : public QProcess {
     Q_OBJECT
-
+public slots:
+    void slot_started() {
+        qDebug() << "started()";
+    }
+    void slot_errorOccurred(QProcess::ProcessError x) {
+        qDebug() << "errorOccurred(): " << x;
+    }
 public:
     Process(QObject *parent = 0) : QProcess(parent) { }
 
@@ -15,10 +21,14 @@ public:
         qDebug() << "Trying to start " << program;
         // convert QVariantList from QML to QStringList for QProcess
 
-        for (int i = 0; i < arguments.length(); i++)
+        for (int i = 0; i < arguments.length(); i++) {
             args << arguments[i].toString();
-
-        QProcess::start(program, args);
+            qDebug() <<  arguments[i].toString();
+        }
+        connect(this, SIGNAL(started()), this, SLOT(slot_started()));
+        connect(this, SIGNAL(errorOccurred(QProcess::ProcessError)), this, SLOT(slot_errorOccurred(QProcess::ProcessError)));
+        QProcess::start(program, args, QProcess::Unbuffered  | QProcess::ReadWrite);
+        QProcess::waitForStarted(2000);
     }
 
     Q_INVOKABLE QByteArray readAll() {
