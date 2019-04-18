@@ -237,8 +237,11 @@ Page {
             height: 80
             width: 200
             onClicked: {
+
                 btnNext.onClicked() // cleanup
+
                 view.currentIndex = view.currentIndex - 1
+
             }
         }
         Button {
@@ -256,6 +259,7 @@ Page {
                 btnPickVariant.enabled = true
                 bg.color = "black"
                 edit.text = ""
+                banner.txt = ""
             }
             enabled: false
         }
