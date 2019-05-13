@@ -87,8 +87,9 @@ ApplicationWindow {
                 anchors.fill: parent
                 currentIndex: 0
                 interactive: false
-                PageSelectVariant {}
-                PageTesting {}
+                PageSelectVariant {id: selectVariantPage}
+                PageTesting {id: testingPage }
+                PageSettings {id: settingsPage }
                 Page {
                     Rectangle {
                         color: "red"

@@ -1,12 +1,10 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>DelegateTest.qml</file>
-        <file>DelegateText.qml</file>
         <file>MyRadioButton.qml</file>
         <file>PageSelectVariant.qml</file>
         <file>PageTesting.qml</file>
-        <file>PageQRCode.qml</file>
-        <file>PageTestMotionController.qml</file>
+        <file>PageSettings.qml</file>
+        <file>MyCheckbox.qml</file>
     </qresource>
 </RCC>

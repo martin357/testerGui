@@ -31,8 +31,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 target.path = /usr/bin/
 
-DISTFILES += \
-    DelegateTest.qml
+DISTFILES +=
 
 HEADERS += \
     process.h

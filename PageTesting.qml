@@ -4,10 +4,13 @@ import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.3
 import Process 1.0
 Page {
+    id: testingPage
     implicitWidth: 800
     implicitHeight: 480
     width: 800
     height: 480
+    property real testTimeEstimate: 1//10*60*1000 // 10 min
+    property real testStart: 0
     Rectangle {
         id: bg
         width: 800
@@ -27,6 +30,7 @@ Page {
             border.width: 3
             radius: 5
             z: 50
+            opacity: 0.7
 
             Text {
                 color: "white"
@@ -34,6 +38,8 @@ Page {
                 font.bold: true
                 font.pixelSize: 32
                 anchors.centerIn: parent
+                width: parent.width - 20
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             }
         }
 
@@ -65,6 +71,7 @@ Page {
                 if(txt.indexOf("#request_qrcode_done") != -1) {
                     bg.color = "black"
                 }
+
             }
         }
         Process {
@@ -77,16 +84,22 @@ Page {
                 //btnStart.enabled = true
                 if(exitCode === 0) {
                     bg.color = "green"
+                    console.log("startTime = " + testingPage.testStart)
+                    console.log("endTime = " + (new Date()).getTime())
+                    testingPage.testTimeEstimate = (new Date()).getTime() - testingPage.testStart
+                    console.log("TestTimerEstimate: " + testingPage.testTimeEstimate)
                 }
                 else {
                     bg.color = "red"
                 }
+                testTimer.running = false
             }
             onBytesWritten: {
                 console.log("bytesWritten")
             }
             onError: {
                 print("error")
+                testTimer.running = false
             }
             onStateChanged: {
                 console.log("StateChanged:" + state )
@@ -94,12 +107,16 @@ Page {
 
             onErrorOccurred: {
                 console.log("Could not start")
+                testTimer.running = false
             }
             onStarted: {
-                progressBar.value = 0.2
+                //progressBar.value = 0.2
                 btnStart.enabled = false
                 btnPickVariant.enabled = false
                 console.log("Process Started")
+                testTimer.running = true
+                testingPage.testStart = (new Date()).getTime()
+                console.log("testTimeStart: " +testingPage.testStart  )
             }
             onReadyRead: {
                 var txt = readAll().toString()
@@ -113,6 +130,17 @@ Page {
                     //bg.color = "black"
                     banner.txt = ""
                 }
+                if(txt.indexOf("#qrcode_already_in_use_try_another_one") != -1) {
+                    banner.txt = "The QRCode is already used, try another one!"
+                }
+                if(txt.indexOf("#time_estimate_ms_10_digits") != -1) {
+                    // #time_estimate_ms_10_digits 01234567
+                    var idx = txt.indexOf("#time_estimate_ms_10_digits") + "#time_estimate_ms_10_digits".length + 1
+                    var num = parseFloat(txt.substr(idx, 10))
+                    console.log("Got a new time estimate from the tester: " + num + " ms")
+                    testingPage.testTimeEstimate = num
+                }
+
             }
 
             onReadyReadStandardError: {
@@ -121,6 +149,18 @@ Page {
             }
 
 
+        }
+        Timer {
+            id: testTimer
+            running: false
+            interval: 1000
+            repeat: true
+            onTriggered: {
+
+                var newValue = ((new Date()).getTime() - testingPage.testStart) / testingPage.testTimeEstimate
+                progressBar.value = newValue > 0 ?  newValue : 0
+                console.log("Refreshing progressBar to " + newValue)
+            }
         }
 
         Button {
@@ -157,7 +197,9 @@ Page {
                     edit.text = "Unsupported board, this is a problem with the tester software, please contact me on Slack: Martin Kopecky(vyvoj)"
                     break;
                 }
+                //testingPage.testStart = (new Date()).getTime()
             }
+
         }
 
         Rectangle {
@@ -273,5 +315,6 @@ Page {
             value: 0
             visible: value !== 0
         }
+
     }
 }

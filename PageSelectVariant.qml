@@ -21,7 +21,16 @@ Page {
                 margins: 5
 
             }*/
-            onClicked: view.currentIndex = view.currentIndex +1
+            onClicked: {
+                if(root.selected.name == "settings") {
+                     view.currentIndex = 2;
+                }
+                else {
+
+                    view.currentIndex = view.currentIndex +1
+                }
+            }
+
             z: 10
         }
         ColumnLayout {
@@ -94,6 +103,16 @@ Page {
                 onCheckedChanged: {
                     if(checked) {
                         root.selected.name = "cw1_v1"
+                    }
+                }
+                checked: false
+            }
+            MyRadioButton {
+                text: qsTr("Settings")
+                //Layout.alignment: Qt.AlignHCenter
+                onCheckedChanged: {
+                    if(checked) {
+                        root.selected.name = "settings"
                     }
                 }
                 checked: false
