@@ -184,8 +184,8 @@ Page {
                     prc.start("flash_mcu.py", ["--rev", "5"])
                     progressBar.value = 0.05
                     break;
-                case "mcu_v6":
-                    prc.start("flash_mcu.py", ["--rev", "6"])
+                case "mcu_v6c":
+                    prc.start("flash_mcu.py", ["--rev", "6", "--variant", "c" ])
                     progressBar.value = 0.05
                     break;
 

@@ -11,7 +11,7 @@ Page {
         anchors.margins: 10
         width: 200
         height: 80
-        text: "Home"
+        text: qsTr("Home")
 
         onClicked: {
             view.currentIndex = 0
@@ -86,7 +86,7 @@ Page {
             console.log("bytesWritten")
         }
         onError: {
-            print("error")
+            console.log("error")
         }
         onStateChanged: {
             console.log("StateChanged:" + state )

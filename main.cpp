@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QtQml>
+#include <QLocale>
 #include "process.h"
 
 static QJSValue getIPs(QQmlEngine *engine, QJSEngine *scriptEngine)

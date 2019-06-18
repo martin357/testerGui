@@ -2,13 +2,13 @@ import QtQuick 2.4
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.3
 Page {
-
+    id: pageSelectVariant
     Rectangle {
         id: r1
         color: "black"
         anchors.fill: parent
         Button {
-            text: "Next"
+            text: qsTr("Next")
             font.pixelSize: 28
             x: 592
             y: 392
@@ -42,7 +42,7 @@ Page {
                     pixelSize: 32
                 }
                 color: "white"
-                text: "Pick the board variant:"
+                text: qsTr("Pick the board variant:")
                 Layout.alignment: Qt.AlignHCenter
             }
             Item {
@@ -77,6 +77,7 @@ Page {
                     }
                 }
             }
+            /*
             MyRadioButton {
                 text: qsTr("Motion Controller rev5")
                 //Layout.alignment: Qt.AlignHCenter
@@ -87,12 +88,13 @@ Page {
                 }
                 checked: false
             }
+            */
             MyRadioButton {
-                text: qsTr("Motion Controller rev6")
+                text: qsTr("Motion Controller rev6 C")
                 //Layout.alignment: Qt.AlignHCenter
                 onCheckedChanged: {
                     if(checked) {
-                        root.selected.name = "mcu_v6"
+                        root.selected.name = "mcu_v6c"
                     }
                 }
                 checked: false
