@@ -180,6 +180,10 @@ Page {
                     prc.start("/usr/bin/tester.py", [])
                     progressBar.value = 0.05
                     break
+                case "a64_v1_3_kit":
+                    prc.start("/usr/bin/tester.py", ["--kit-type", "kit"])
+                    progressBar.value = 0.05
+                    break
                 case "mcu_v5":
                     prc.start("flash_mcu.py", ["--rev", "5"])
                     progressBar.value = 0.05

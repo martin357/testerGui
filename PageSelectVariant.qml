@@ -77,6 +77,7 @@ Page {
                     }
                 }
             }
+
             /*
             MyRadioButton {
                 text: qsTr("Motion Controller rev5")
@@ -108,6 +109,15 @@ Page {
                     }
                 }
                 checked: false
+            }
+            MyRadioButton {
+                text: qsTr("PrusaA64 V1.3 Kit")
+                checked: true
+                onCheckedChanged: {
+                    if(checked) {
+                        root.selected.name = "a64_v1_3_kit"
+                    }
+                }
             }
             MyRadioButton {
                 text: qsTr("Settings")
