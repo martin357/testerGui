@@ -112,7 +112,7 @@ Page {
             }
             MyRadioButton {
                 text: qsTr("PrusaA64 V1.3 Kit")
-                checked: true
+                checked: false
                 onCheckedChanged: {
                     if(checked) {
                         root.selected.name = "a64_v1_3_kit"
