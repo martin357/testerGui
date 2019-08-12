@@ -140,11 +140,11 @@ Page {
                 var txt = readAll().toString()
                 console.log("Process read: " + txt)
                 edit.text += txt
-                if(txt.indexOf("request_qrcode") != -1) {
+                if(txt.indexOf("#request_qrcode") != -1) {
                     //bg.color = "orange"
                     banner.txt = "Scan the QRCode"
                 }
-                if(txt.indexOf("request_qrcode_done") != -1) {
+                if(txt.indexOf("#request_qrcode_done") != -1) {
                     //bg.color = "black"
                     banner.txt = ""
                 }
@@ -157,6 +157,10 @@ Page {
                     var num = parseFloat(txt.substr(idx, 10))
                     console.log("Got a new time estimate from the tester: " + num + " ms")
                     testingPage.testTimeEstimate = num
+                }
+                if(txt.indexOf("#message ") != -1) {
+                    //bg.color = "black"
+                    banner.txt = txt.substr(txt.indexOf("#message ") + 9, txt.indexOf("\n", txt.indexOf("#message")) - 9)
                 }
 
             }
