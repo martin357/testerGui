@@ -46,6 +46,7 @@ Page {
             Item {
                 height: 30
             }
+
             /*
             MyRadioButton {
                 checked: false
@@ -53,6 +54,7 @@ Page {
                 Layout.alignment: Qt.AlignHCenter
             }
             */
+
             /*
             MyRadioButton {
                 text: qsTr("PrusaA64 V1.2")
@@ -61,10 +63,10 @@ Page {
                 onCheckedChanged: {
                     if(checked) {
                         root.selected.name = "a64_v1_2"
-
                     }
                 }
             }*/
+
             MyRadioButton {
                 text: qsTr("PrusaA64 V1.3")
                 checked: true
@@ -87,6 +89,7 @@ Page {
                 checked: false
             }
             */
+
             MyRadioButton {
                 text: qsTr("Motion Controller rev6 C")
                 onCheckedChanged: {
