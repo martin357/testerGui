@@ -180,6 +180,10 @@ Page {
                     prc.start("/usr/bin/tester.py", [])
                     progressBar.value = 0.05
                     break
+                case "a64_v1_3_repair":
+                    prc.start("/usr/bin/tester.py", ["--repair"])
+                    progressBar.value = 0.05
+                    break
                 case "a64_v1_3_kit":
                     prc.start("/usr/bin/tester.py", ["--kit-type", "kit"])
                     progressBar.value = 0.05
@@ -209,7 +213,7 @@ Page {
         Rectangle {
             color: "#313131"
             opacity: 0.4
-            width: 150
+            width: 260
             height: 50
             radius: 10
             anchors {

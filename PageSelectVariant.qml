@@ -26,11 +26,9 @@ Page {
                      view.currentIndex = 2;
                 }
                 else {
-
                     view.currentIndex = view.currentIndex +1
                 }
             }
-
             z: 10
         }
         ColumnLayout {
@@ -69,7 +67,6 @@ Page {
             }*/
             MyRadioButton {
                 text: qsTr("PrusaA64 V1.3")
-                //Layout.alignment: Qt.AlignHCenter
                 checked: true
                 onCheckedChanged: {
                     if(checked) {
@@ -92,7 +89,6 @@ Page {
             */
             MyRadioButton {
                 text: qsTr("Motion Controller rev6 C")
-                //Layout.alignment: Qt.AlignHCenter
                 onCheckedChanged: {
                     if(checked) {
                         root.selected.name = "mcu_v6c"
@@ -102,7 +98,6 @@ Page {
             }
             MyRadioButton {
                 text: qsTr("CW1")
-                //Layout.alignment: Qt.AlignHCenter
                 onCheckedChanged: {
                     if(checked) {
                         root.selected.name = "cw1_v1"
@@ -119,9 +114,18 @@ Page {
                     }
                 }
             }
+
+            MyRadioButton {
+                text: qsTr("PrusaA64 V1.3 Repair")
+                checked: false
+                onCheckedChanged: {
+                    if(checked) {
+                        root.selected.name = "a64_v1_3_repair"
+                    }
+                }
+            }
             MyRadioButton {
                 text: qsTr("Settings")
-                //Layout.alignment: Qt.AlignHCenter
                 onCheckedChanged: {
                     if(checked) {
                         root.selected.name = "settings"
