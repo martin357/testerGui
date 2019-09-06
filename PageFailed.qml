@@ -17,7 +17,14 @@ Item {
             text: "Failed"
             Layout.alignment: Qt.AlignCenter
         }
+        /*
+        Text {
+            color: "white"
+            text: "Read QRCode and you are done."
+            Layout.alignment: Qt.AlignCenter
+        }
 
+        */
         Row {
             Layout.alignment: Qt.AlignCenter
             spacing: 5

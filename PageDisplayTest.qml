@@ -32,11 +32,13 @@ Page {
 
     property int counter: 0
     property var pointButtons: []
+    property bool result: false
     property var showButtons: function(what) {
         for(var i in pointButtons) {
             pointButtons[i].visible = what
         }
     }
+    property string log: ""
 
     Component.onCompleted: {
         initialize()
@@ -61,21 +63,37 @@ Page {
             counter = 0
             testTimer.stop()
             prc.start("write_display_test_results.py", ["--success"])
-            view.currentIndex = 1
+            result = true
         }
     }
 
     Process {
         id: prc
+
         onFinished: {
             console.log("Process finished with exitCode: ", exitCode)
+            if(exitCode === 0) {
+                if(result) {
+                    view.currentIndex = 1
+                }
+                else {
+                    view.currentIndex = 2
+                }
+            }
+            else {
+                internalError.visible = true
+            }
         }
+
         onBytesWritten: {
             console.log("Process bytesWritten")
         }
+
         onError: {
             print("Process error")
+
         }
+
         onStateChanged: {
             console.log("Process StateChanged:" + state )
         }
@@ -83,17 +101,82 @@ Page {
         onErrorOccurred: {
             console.log("Could not start program")
         }
+
         onStarted: {
             console.log("Process Started")
         }
+
         onReadyRead: {
             var txt = readAll().toString()
+            log += txt
             console.log("Process read: " + txt)
+            if(txt.indexOf("#request_qrcode") !== -1) {
+                requestQrcodeBanner.visible = true
+                console.log("showing qrcode request")
+            }
+            if(txt.indexOf("#request_qrcode_done") !== -1) {
+                requestQrcodeBanner.visible = false
+                console.log("hiding qrcode request")
+            }
         }
 
         onReadyReadStandardError: {
             var txt = readAllStandardError().toString()
+            log += txt
             console.log("Process StdErrReady:\n" + txt)
+        }
+    }
+    Rectangle {
+        id: internalError
+        visible: false
+        width: 800
+        height: 480
+        z: 200
+        Rectangle {
+            anchors {
+                fill: parent
+            }
+            color: "black"
+        }
+        Text {
+            id: tit
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                top: parent.top
+            }
+            font.pixelSize: 32
+            text: "Internal error occured."
+            color: "white"
+        }
+        TextEdit {
+            id: err
+            enabled: false
+            anchors.centerIn: parent
+            height: 400
+            width: 700
+            text: log
+            color: "white"
+        }
+    }
+    Rectangle {
+        id: requestQrcodeBanner
+        visible: false
+        anchors {
+            centerIn: parent
+        }
+        z: 99
+        width: 700
+        height: 100
+        color: "black"
+        border.color: "yellow"
+        border.width: 2
+        radius: 5
+        opacity: 80
+        Text {
+            anchors.centerIn: parent
+            color: "white"
+            font.pixelSize: 48
+            text: "Scan the QR code"
         }
     }
 
@@ -134,7 +217,7 @@ Page {
             }
             counter = 0
             prc.start("write_display_test_results.py", ["--failure"])
-            view.currentIndex = 2
+            result = false
 
         }
         onRunningChanged: {
