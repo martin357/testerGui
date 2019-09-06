@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>saraafonso__arp-sample-001-sara-afonso.wav</file>
+        <file>calibration_pattern.png</file>
+    </qresource>
+</RCC>

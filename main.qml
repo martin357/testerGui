@@ -22,6 +22,8 @@ import QtQuick.Window 2.11
 import QtQuick.VirtualKeyboard 2.3
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.0
+import QtMultimedia 5.9
+
 ApplicationWindow {
     property bool rotate: true
     id: window
@@ -33,7 +35,15 @@ ApplicationWindow {
     property string prusaOrange: "#ed6b21"
     onActiveFocusItemChanged: print("activeFocusItem", activeFocusItem)
 
+    Component.onCompleted: {
+        infiniteSound.play()
+    }
 
+    SoundEffect {
+         id: infiniteSound
+         source: "saraafonso__arp-sample-001-sara-afonso.wav"
+         loops: SoundEffect.Infinite
+     }
 
 
     Page {
@@ -106,9 +116,13 @@ ApplicationWindow {
                 anchors.fill: parent
                 currentIndex: 0
                 interactive: false
-                PageSelectVariant {id: selectVariantPage}
-                PageTesting {id: testingPage }
-                PageSettings {id: settingsPage }
+                //PageSelectVariant {id: selectVariantPage}
+                //PageTesting {id: testingPage }
+                //PageSettings {id: settingsPage }
+                PageDisplayTest {id: displayTestPage }
+                PageSucceeded { id: succeedPage }
+                PageFailed { id: failedPage }
+
                 Page {
                     Rectangle {
                         color: "red"

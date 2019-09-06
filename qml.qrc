@@ -6,5 +6,9 @@
         <file>PageTesting.qml</file>
         <file>PageSettings.qml</file>
         <file>MyCheckbox.qml</file>
+        <file>PageDisplayTest.qml</file>
+        <file>PointButton.qml</file>
+        <file>PageFailed.qml</file>
+        <file>PageSucceeded.qml</file>
     </qresource>
 </RCC>
