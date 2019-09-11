@@ -147,16 +147,64 @@ Page {
             font.pixelSize: 32
             text: "Internal error occured."
             color: "white"
+            font.bold: true
         }
-        TextEdit {
-            id: err
-            enabled: false
-            anchors.centerIn: parent
-            height: 400
-            width: 700
-            text: log
-            color: "white"
-        }
+//        Flickable {
+//            height: 400
+//            width: 700
+//            clip: true
+//            anchors.centerIn: parent
+//            interactive: true
+//            Text {
+//                id: err
+//                text: log
+//                color: "white"
+//                enabled: false
+//                width: 700
+//                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+//                font.pixelSize: 18
+//            }
+//        }
+        Flickable {
+             id: flick
+             anchors {
+                 horizontalCenter: parent.horizontalCenter
+                 top: tit.bottom
+             }
+
+             width: 700; height: 400;
+             contentWidth: edit.paintedWidth
+             contentHeight: edit.paintedHeight
+             clip: true
+
+             function ensureVisible(r)
+             {
+                 if (contentX >= r.x)
+                     contentX = r.x;
+                 else if (contentX+width <= r.x+r.width)
+                     contentX = r.x+r.width-width;
+                 if (contentY >= r.y)
+                     contentY = r.y;
+                 else if (contentY+height <= r.y+r.height)
+                     contentY = r.y+r.height-height;
+             }
+
+             TextEdit {
+                 color: "white"
+                 enabled: false
+                 id: edit
+                 font.pixelSize: 16
+                 width: flick.width
+                 focus: true
+                 wrapMode: TextEdit.Wrap
+                 onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
+                 onTextChanged: {
+
+                     cursorPosition = text.length
+                 }
+                 text: log
+             }
+         }
     }
     Rectangle {
         id: requestQrcodeBanner

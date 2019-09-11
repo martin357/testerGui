@@ -72,6 +72,7 @@ Item {
                     view.currentIndex = 0
                 }
             }
+            /*
             Button {
                 text: "Turn off"
                 onClicked: {
@@ -79,6 +80,7 @@ Item {
                     console.log("Turn off not implemented, FIXME")
                 }
             }
+            */
         }
     }
 }
