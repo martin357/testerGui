@@ -39,8 +39,8 @@ ApplicationWindow {
     Page {
         id: root
         // A place to save info about the selected board, at least the name
-        // a64_v1_1, a64_v1_2, a64_v1_3, mcu_v4, mcu_v5, mcu_v6, cw1_v1
-        property var selected: {"name": "a64_v1_3"}
+        // a64_v1_1, a64_v1_2, a64_v1_3, a64_v1_3a, mcu_v4, mcu_v5, mcu_v6, cw1_v1
+        property var selected: {"name": "a64_v1_3a"}
 
         anchors.centerIn: parent
         width: window.rotate ?  parent.height : parent.width
