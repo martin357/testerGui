@@ -86,6 +86,7 @@ Page {
                 }
             }*/
 
+            /*
             MyRadioButton {
                 text: qsTr("PrusaA64 V1.3")
                 checked: true
@@ -95,6 +96,18 @@ Page {
                     }
                 }
             }
+            */
+            MyRadioButton {
+                text: qsTr("PrusaA64 V1.3a")
+                checked: true
+                onCheckedChanged: {
+                    if(checked) {
+                        root.selected.name = "a64_v1_3a"
+                    }
+                }
+            }
+
+
 
             /*
             MyRadioButton {
@@ -127,22 +140,40 @@ Page {
                 }
                 checked: false
             }
+//            MyRadioButton {
+//                text: qsTr("PrusaA64 V1.3 Kit")
+//                checked: false
+//                onCheckedChanged: {
+//                    if(checked) {
+//                        root.selected.name = "a64_v1_3_kit"
+//                    }
+//                }
+//            }
             MyRadioButton {
-                text: qsTr("PrusaA64 V1.3 Kit")
+                text: qsTr("PrusaA64 V1.3a Kit")
                 checked: false
                 onCheckedChanged: {
                     if(checked) {
-                        root.selected.name = "a64_v1_3_kit"
+                        root.selected.name = "a64_v1_3a_kit"
                     }
                 }
             }
 
+//            MyRadioButton {
+//                text: qsTr("PrusaA64 V1.3 Repair")
+//                checked: false
+//                onCheckedChanged: {
+//                    if(checked) {
+//                        root.selected.name = "a64_v1_3_repair"
+//                    }
+//                }
+//            }
             MyRadioButton {
                 text: qsTr("PrusaA64 V1.3 Repair")
                 checked: false
                 onCheckedChanged: {
                     if(checked) {
-                        root.selected.name = "a64_v1_3_repair"
+                        root.selected.name = "a64_v1_3a_repair"
                     }
                 }
             }

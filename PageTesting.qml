@@ -210,6 +210,18 @@ Page {
                     prc.start("/usr/bin/tester.py", ["--kit-type", "kit"])
                     progressBar.value = 0.05
                     break
+                case "a64_v1_3a":
+                    prc.start("/usr/bin/tester.py", ["--board-version", "V1.3a"])
+                    progressBar.value = 0.05
+                    break
+                case "a64_v1_3a_repair":
+                    prc.start("/usr/bin/tester.py", ["--board-version", "V1.3a", "--repair"])
+                    progressBar.value = 0.05
+                    break
+                case "a64_v1_3a_kit":
+                    prc.start("/usr/bin/tester.py", ["--board-version", "V1.3a", "--kit-type", "kit"])
+                    progressBar.value = 0.05
+                    break
                 case "mcu_v5":
                     prc.start("flash_mcu.py", ["--rev", "5"])
                     progressBar.value = 0.05
