@@ -55,7 +55,7 @@ ApplicationWindow {
         anchors.centerIn: parent
         width: window.rotate ?  parent.height : parent.width
         height: window.rotate ? parent.width : parent.height
-        rotation: window.rotate ? 270 : 0
+        rotation: window.rotate ? 90 : 0
         Rectangle {
             color: "black"
             anchors.fill: parent
